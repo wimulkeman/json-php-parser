@@ -9,6 +9,7 @@ use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\NullLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
+use Wimulkeman\JsonParser\Token\Whitespace\LinebreakWhitespaceToken;
 
 class ScannerTest extends TestCase
 {
@@ -38,7 +39,7 @@ class ScannerTest extends TestCase
 
     public function testScanWithWhitespacesReturnedThroughSettingOptions(): void
     {
-        $text = 'falsenull';
+        $text = "false\nnull";
 
         $stream = $this->createStream($text);
 
@@ -49,6 +50,7 @@ class ScannerTest extends TestCase
 
         $expectedTokens = [
             FalseLiteralToken::class,
+            LinebreakWhitespaceToken::class,
             NullLiteralToken::class,
             EndOfStreamWhitespaceToken::class,
         ];
