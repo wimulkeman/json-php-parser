@@ -1,6 +1,6 @@
 <?php
 
-namespace Wimulkeman\Tests\JsonParser\Token\Whitespace;
+namespace WimUlkeman\Tests\JsonParser\Token\Whitespace;
 
 use Wimulkeman\JsonParser\Token\ScannableToken;
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
