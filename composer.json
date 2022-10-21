@@ -1,0 +1,24 @@
+{
+    "name": "wimulkeman/json-parser",
+    "description": "This package is a test to create a json parser. It's end goal is to create a parser which is more suitable for large JSON files which cannot be loaded in memory at once.",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.8",
+        "symplify/easy-coding-standard": "^11.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Wimulkeman\\JsonParser\\": "src/",
+            "Wimulkeman\\Tests\\JsonParser\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Wim Ulkeman",
+            "email": "wimulkeman@hotmail.com"
+        }
+    ],
+    "require": {}
+}
