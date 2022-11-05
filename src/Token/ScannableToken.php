@@ -8,8 +8,6 @@ use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
 
 class ScannableToken extends AbstractToken implements Scannable
 {
-    protected string $lexeme;
-
     /**
      * @param resource $stream
      *

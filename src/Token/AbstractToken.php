@@ -4,17 +4,13 @@ namespace Wimulkeman\JsonParser\Token;
 
 abstract class AbstractToken
 {
-    /** @var mixed */
-    protected $value;
+    protected string $lexeme;
     protected int $pointerStart;
     protected int $pointerEnd;
 
-    /**
-     * @return mixed
-     */
-    final public function getTokenValue()
+    final public function getLexeme(): string
     {
-        return $this->value;
+        return $this->lexeme;
     }
 
     final protected function setPointerStart(int $start): void
@@ -22,7 +18,7 @@ abstract class AbstractToken
         $this->pointerStart = $start;
     }
 
-    final protected function getPointerStart(): int
+    final public function getPointerStart(): int
     {
         return $this->pointerStart;
     }
@@ -32,7 +28,7 @@ abstract class AbstractToken
         $this->pointerEnd = $end;
     }
 
-    final protected function getPointerEnd(): int
+    final public function getPointerEnd(): int
     {
         return $this->pointerEnd;
     }
