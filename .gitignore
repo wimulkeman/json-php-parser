@@ -1,0 +1,4 @@
+vendor/*
+test-reports
+.phpunit.cache
+.phpunit.result.cache
