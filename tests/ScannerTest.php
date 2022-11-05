@@ -1,6 +1,6 @@
 <?php
 
-namespace WimUlkeman\Tests\JsonParser;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

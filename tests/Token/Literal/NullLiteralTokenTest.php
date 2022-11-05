@@ -1,10 +1,10 @@
 <?php
 
-namespace WimUlkeman\Tests\JsonParser\Token\Literal;
+namespace Tests\Token\Literal;
 
 use Wimulkeman\JsonParser\Token\Literal\NullLiteralToken;
 use Wimulkeman\JsonParser\Token\ScannableToken;
-use WimUlkeman\Tests\JsonParser\Token\AbstractScanTokenTest;
+use Tests\Token\AbstractScanTokenTest;
 
 class NullLiteralTokenTest extends AbstractScanTokenTest
 {

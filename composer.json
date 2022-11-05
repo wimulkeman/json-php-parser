@@ -10,8 +10,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Wimulkeman\\JsonParser\\": "src/",
-            "Wimulkeman\\Tests\\JsonParser\\": "tests/"
+            "Wimulkeman\\JsonParser\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "authors": [

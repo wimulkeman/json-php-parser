@@ -1,10 +1,10 @@
 <?php
 
-namespace WimUlkeman\Tests\JsonParser\Token\Whitespace;
+namespace Tests\Token\Whitespace;
 
 use Wimulkeman\JsonParser\Token\ScannableToken;
 use Wimulkeman\JsonParser\Token\Whitespace\LinebreakWhitespaceToken;
-use WimUlkeman\Tests\JsonParser\Token\AbstractScanTokenTest;
+use Tests\Token\AbstractScanTokenTest;
 
 class LinebreakWhitespaceTokenTest extends AbstractScanTokenTest
 {
