@@ -3,6 +3,7 @@
 namespace Wimulkeman\JsonParser;
 
 use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
+use Wimulkeman\JsonParser\Lexer\IdentifierLexer;
 use Wimulkeman\JsonParser\Lexer\LiteralLexer;
 use Wimulkeman\JsonParser\Lexer\WhitespaceLexer;
 use Wimulkeman\JsonParser\Token\ScannableToken;
@@ -16,6 +17,7 @@ class Lexer implements Scannable
         $this->lexers = [
             new LiteralLexer(),
             new WhitespaceLexer(),
+            new IdentifierLexer(),
         ];
     }
 

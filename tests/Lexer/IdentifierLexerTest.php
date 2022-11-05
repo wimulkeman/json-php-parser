@@ -2,27 +2,25 @@
 
 namespace Tests\Lexer;
 
-use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Wimulkeman\JsonParser\Lexer\IdentifierLexer;
+use PHPUnit\Framework\TestCase;
 use Wimulkeman\JsonParser\Lexer\LiteralLexer;
 use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\NullLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
+use Wimulkeman\JsonParser\Token\LiteralScannableToken;
 
-class LiteralLexerTest extends TestCase
+class IdentifierLexerTest extends TestCase
 {
     public function testItScansTheDifferentTypesOfLanguageLiterals(): void
     {
-        $falseStream = $this->createStream('false');
-        $trueStream = $this->createStream('true');
-        $nullStream = $this->createStream('null');
+        $identifierStream = $this->createStream('"test"');
         $invalidStream = $this->createStream('invalid-value');
 
-        $lexer = new LiteralLexer();
-        $this->assertInstanceOf(FalseLiteralToken::class, $lexer->scan($falseStream));
-        $this->assertInstanceOf(TrueLiteralToken::class, $lexer->scan($trueStream));
-        $this->assertInstanceOf(NullLiteralToken::class, $lexer->scan($nullStream));
+        $lexer = new IdentifierLexer();
+        $this->assertInstanceOf(IdentifierScannableToken::class, $lexer->scan($identifierStream));
         $this->assertNull($lexer->scan($invalidStream));
     }
 

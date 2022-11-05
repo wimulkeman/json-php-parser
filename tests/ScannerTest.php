@@ -5,6 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Wimulkeman\JsonParser\Scanner;
+use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\NullLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
@@ -52,6 +53,33 @@ class ScannerTest extends TestCase
             FalseLiteralToken::class,
             LinebreakWhitespaceToken::class,
             NullLiteralToken::class,
+            EndOfStreamWhitespaceToken::class,
+        ];
+
+        foreach ($tokens as $token) {
+            $this->assertInstanceOf(array_shift($expectedTokens), $token);
+        }
+
+        $this->assertCount(0, $expectedTokens);
+    }
+
+    public function testScanWithIdentifierAndLiteralTokens(): void
+    {
+        $text = 'false"test"null"15 \\" wheels""foo"';
+
+        $stream = $this->createStream($text);
+
+        $scanner = new Scanner();
+        $scanner->setOption(Scanner::STRIP_WHITESPACES, false);
+
+        $tokens = $scanner->scan($stream);
+
+        $expectedTokens = [
+            FalseLiteralToken::class,
+            IdentifierScannableToken::class,
+            NullLiteralToken::class,
+            IdentifierScannableToken::class,
+            IdentifierScannableToken::class,
             EndOfStreamWhitespaceToken::class,
         ];
 
