@@ -4,13 +4,11 @@ namespace Wimulkeman\JsonParser\Token;
 
 use Wimulkeman\JsonParser\Exception\ContentNotAString;
 use Wimulkeman\JsonParser\Exception\InvalidStreamProvided;
-use Wimulkeman\JsonParser\Exception\MissingDynamicScanImplementation;
 use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
 
 class ScannableToken extends AbstractToken implements Scannable
 {
     protected string $lexeme;
-    protected bool $dynamicScan = false;
 
     /**
      * @param resource $stream
@@ -19,10 +17,6 @@ class ScannableToken extends AbstractToken implements Scannable
      */
     public function scan($stream): ?ScannableToken
     {
-        if (true === $this->dynamicScan) {
-            throw new MissingDynamicScanImplementation();
-        }
-
         $this->setPointerStart(ftell($stream));
 
         $lexemeLength = strlen($this->lexeme) ?: 1 ;
