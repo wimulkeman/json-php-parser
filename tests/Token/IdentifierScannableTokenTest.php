@@ -38,31 +38,31 @@ class IdentifierScannableTokenTest extends AbstractScanTokenTest
     public function scannerInput(): array
     {
         return [
-            [
+            'non-identifier input' => [
                 '{',
                 null,
             ],
-            [
+            'identifier input with one word' => [
                 '"test"',
                 'test',
             ],
-            [
+            'identifier input with two words' => [
                 '"foo bar"',
                 'foo bar',
             ],
-            [
+            'escaping escape symbol' => [
                 '"\\\\"',
                 '\\',
             ],
-            [
+            'escaping wrapping symbol' => [
                 '"15\\" wheels"',
                 '15" wheels',
             ],
-            [
+            'escaping escape and wrapping symbol' => [
                 '"15\\" wheels \\\\ special livery"',
                 '15" wheels \\ special livery',
             ],
-            [
+            'only scanning for the first identifier' => [
                 '"test""foo"',
                 'test',
             ],
