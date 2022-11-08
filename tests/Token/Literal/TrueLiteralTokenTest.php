@@ -2,9 +2,9 @@
 
 namespace Tests\Token\Literal;
 
+use Tests\Token\AbstractScanTokenTest;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
 use Wimulkeman\JsonParser\Token\ScannableToken;
-use Tests\Token\AbstractScanTokenTest;
 
 class TrueLiteralTokenTest extends AbstractScanTokenTest
 {

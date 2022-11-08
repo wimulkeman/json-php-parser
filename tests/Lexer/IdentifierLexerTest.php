@@ -2,15 +2,10 @@
 
 namespace Tests\Lexer;
 
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Wimulkeman\JsonParser\Lexer\IdentifierLexer;
-use PHPUnit\Framework\TestCase;
-use Wimulkeman\JsonParser\Lexer\LiteralLexer;
 use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
-use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
-use Wimulkeman\JsonParser\Token\Literal\NullLiteralToken;
-use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
-use Wimulkeman\JsonParser\Token\LiteralScannableToken;
 
 class IdentifierLexerTest extends TestCase
 {

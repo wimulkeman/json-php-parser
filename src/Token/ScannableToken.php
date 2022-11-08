@@ -17,7 +17,7 @@ class ScannableToken extends AbstractToken implements Scannable
     {
         $this->setPointerStart(ftell($stream));
 
-        $lexemeLength = strlen($this->lexeme) ?: 1 ;
+        $lexemeLength = strlen($this->lexeme) ?: 1;
         $streamContent = $this->scanStream($stream, $lexemeLength);
 
         if ($this->lexeme !== $streamContent) {

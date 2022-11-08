@@ -2,9 +2,9 @@
 
 namespace Tests\Token\Whitespace;
 
+use Tests\Token\AbstractScanTokenTest;
 use Wimulkeman\JsonParser\Token\ScannableToken;
 use Wimulkeman\JsonParser\Token\Whitespace\LinebreakWhitespaceToken;
-use Tests\Token\AbstractScanTokenTest;
 
 class LinebreakWhitespaceTokenTest extends AbstractScanTokenTest
 {

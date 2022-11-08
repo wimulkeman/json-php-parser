@@ -65,7 +65,7 @@ class IdentifierScannableTokenTest extends AbstractScanTokenTest
             [
                 '"test""foo"',
                 'test',
-            ]
+            ],
         ];
     }
 }
