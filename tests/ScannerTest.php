@@ -10,6 +10,11 @@ use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\NullLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
 use Wimulkeman\JsonParser\Token\OperatorScannableToken;
+use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\CloseListSeparatorToken;
+use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\CloseObjectSeparatorToken;
+use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\OpenListSeparatorToken;
+use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\OpenObjectSeparatorToken;
+use Wimulkeman\JsonParser\Token\Separator\ValueSeparatorToken;
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
 use Wimulkeman\JsonParser\Token\Whitespace\LinebreakWhitespaceToken;
 use Wimulkeman\JsonParser\Token\Whitespace\SpaceWhitespaceToken;
@@ -86,6 +91,31 @@ class ScannerTest extends TestCase
             SpaceWhitespaceToken::class,
             IdentifierScannableToken::class,
             EndOfStreamWhitespaceToken::class,
+        ];
+
+        foreach ($tokens as $token) {
+            $this->assertInstanceOf(array_shift($expectedTokens), $token);
+        }
+
+        $this->assertCount(0, $expectedTokens);
+    }
+
+    public function testScanSeparatorTokens()
+    {
+        $text = ',[]{}';
+
+        $stream = $this->createStream($text);
+
+        $scanner = new Scanner();
+
+        $tokens = $scanner->scan($stream);
+
+        $expectedTokens = [
+            ValueSeparatorToken::class,
+            OpenListSeparatorToken::class,
+            CloseListSeparatorToken::class,
+            OpenObjectSeparatorToken::class,
+            CloseObjectSeparatorToken::class,
         ];
 
         foreach ($tokens as $token) {
