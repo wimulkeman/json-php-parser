@@ -21,6 +21,8 @@ use Wimulkeman\JsonParser\Token\Whitespace\SpaceWhitespaceToken;
 
 class ScannerTest extends TestCase
 {
+    use StreamTrait;
+
     public function testItScansAndReturnsTheDifferentLanguageConstructsInSequenceOfEncountered(): void
     {
         $text = 'truetruefalsenull';
@@ -123,21 +125,5 @@ class ScannerTest extends TestCase
         }
 
         $this->assertCount(0, $expectedTokens);
-    }
-
-    /**
-     * @return resource
-     */
-    protected function createStream(string $text)
-    {
-        $stream = fopen('php://memory', 'rb+');
-        fwrite($stream, $text);
-        rewind($stream);
-
-        if (false === $stream) {
-            throw new RuntimeException('In memory stream could not be created for the test');
-        }
-
-        return $stream;
     }
 }

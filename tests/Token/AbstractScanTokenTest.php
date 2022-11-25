@@ -4,11 +4,14 @@ namespace Tests\Token;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Tests\StreamTrait;
 use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
 use Wimulkeman\JsonParser\Token\ScannableToken;
 
 abstract class AbstractScanTokenTest extends TestCase
 {
+    use StreamTrait;
+
     abstract public function initToken(): ScannableToken;
 
     abstract public function getTestString(): string;
@@ -34,21 +37,5 @@ abstract class AbstractScanTokenTest extends TestCase
     final public function testItImplementsTheScannableInterface(): void
     {
         $this->assertInstanceOf(Scannable::class, $this->initToken());
-    }
-
-    /**
-     * @return resource
-     */
-    final protected function createStream(string $text)
-    {
-        $stream = fopen('php://memory', 'rb+');
-        fwrite($stream, $text);
-        rewind($stream);
-
-        if (false === $stream) {
-            throw new RuntimeException('In memory stream could not be created for the test');
-        }
-
-        return $stream;
     }
 }
