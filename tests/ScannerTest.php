@@ -9,8 +9,10 @@ use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\NullLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
+use Wimulkeman\JsonParser\Token\OperatorScannableToken;
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
 use Wimulkeman\JsonParser\Token\Whitespace\LinebreakWhitespaceToken;
+use Wimulkeman\JsonParser\Token\Whitespace\SpaceWhitespaceToken;
 
 class ScannerTest extends TestCase
 {
@@ -65,7 +67,7 @@ class ScannerTest extends TestCase
 
     public function testScanWithIdentifierAndLiteralTokens(): void
     {
-        $text = 'false"test"null"15 \\" wheels""foo"';
+        $text = 'false"test"null"15 \\" wheels""foo": "value"';
 
         $stream = $this->createStream($text);
 
@@ -79,6 +81,9 @@ class ScannerTest extends TestCase
             IdentifierScannableToken::class,
             NullLiteralToken::class,
             IdentifierScannableToken::class,
+            IdentifierScannableToken::class,
+            OperatorScannableToken::class,
+            SpaceWhitespaceToken::class,
             IdentifierScannableToken::class,
             EndOfStreamWhitespaceToken::class,
         ];

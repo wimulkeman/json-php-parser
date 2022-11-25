@@ -4,6 +4,7 @@ namespace Wimulkeman\JsonParser\Lexer;
 
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
 use Wimulkeman\JsonParser\Token\Whitespace\LinebreakWhitespaceToken;
+use Wimulkeman\JsonParser\Token\Whitespace\SpaceWhitespaceToken;
 
 class WhitespaceLexer extends AbstractLexer
 {
@@ -12,6 +13,7 @@ class WhitespaceLexer extends AbstractLexer
         return [
             new LinebreakWhitespaceToken(),
             new EndOfStreamWhitespaceToken(),
+            new SpaceWhitespaceToken(),
         ];
     }
 }
