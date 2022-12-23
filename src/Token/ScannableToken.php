@@ -5,9 +5,12 @@ namespace Wimulkeman\JsonParser\Token;
 use Wimulkeman\JsonParser\Exception\ContentNotAString;
 use Wimulkeman\JsonParser\Exception\InvalidStreamProvided;
 use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
+use Wimulkeman\JsonParser\Traits\StreamResourceTrait;
 
 abstract class ScannableToken extends AbstractToken implements Scannable
 {
+    use StreamResourceTrait;
+
     /**
      * @param resource $stream
      *
@@ -15,7 +18,7 @@ abstract class ScannableToken extends AbstractToken implements Scannable
      */
     public function scan($stream): ?ScannableToken
     {
-        $this->setPointerStart(ftell($stream));
+        $this->setPointerStart($this->getCurrentStreamPosition($stream));
 
         $lexemeLength = strlen($this->lexeme) ?: 1;
         $streamContent = $this->scanStream($stream, $lexemeLength);
@@ -24,7 +27,7 @@ abstract class ScannableToken extends AbstractToken implements Scannable
             return null;
         }
 
-        $this->setPointerEnd(ftell($stream));
+        $this->setPointerEnd($this->getCurrentStreamPosition($stream));
 
         return $this;
     }
