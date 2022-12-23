@@ -37,7 +37,10 @@ abstract class ScannableToken extends AbstractToken implements Scannable
         return false;
     }
 
-    protected function scanStream($stream, $length): string
+    /**
+     * @param resource $stream
+     */
+    protected function scanStream($stream, int $length): string
     {
         if (!is_resource($stream) || 'stream' !== get_resource_type($stream)) {
             throw new InvalidStreamProvided();
