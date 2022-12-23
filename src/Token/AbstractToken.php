@@ -2,7 +2,10 @@
 
 namespace Wimulkeman\JsonParser\Token;
 
-abstract class AbstractToken
+use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
+use Wimulkeman\JsonParser\Interfaces\Token\StreamPositionInterface;
+
+abstract class AbstractToken implements StreamPositionInterface, GrammerSupport
 {
     protected string $lexeme;
     protected int $pointerStart;
@@ -32,4 +35,15 @@ abstract class AbstractToken
     {
         return $this->pointerEnd;
     }
+
+    final public function requiresLevel(): bool
+    {
+        return count($this->supportedLevelTokens()) > 0;
+    }
+
+    abstract public function acceptsAllTokens(): bool;
+
+    abstract public function supportedNextTokens(): array;
+
+    abstract public function supportedLevelTokens(): array;
 }
