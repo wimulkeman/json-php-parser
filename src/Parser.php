@@ -34,12 +34,16 @@ class Parser
 
         $previousToken = new StartOfStreamWhitespaceToken();
         foreach ($tokens as $currentToken) {
-            if (false === $this->checkGrammer($currentToken, $previousToken)) {
+            if (false === $this->checkGrammerSequence($currentToken, $previousToken)) {
                 throw new InvalidGrammerSequence($currentToken, $previousToken);
             }
 
             if (!$currentToken instanceof WhitespaceScannableToken) {
                 $previousToken = $currentToken;
+            }
+
+            if (false === $this->checkGrammerLevel($currentToken)) {
+                throw new MissingLevelOpener($currentToken, $previousToken);
             }
 
             if ($currentToken instanceof LevelSeparatorToken) {
@@ -55,7 +59,7 @@ class Parser
     /**
      * @throws JsonParserException
      */
-    public function checkGrammer(GrammerSupport $currentToken, GrammerSupport $previousToken): bool
+    public function checkGrammerSequence(GrammerSupport $currentToken, GrammerSupport $previousToken): bool
     {
         if ($currentToken instanceof WhitespaceScannableToken
             || $previousToken instanceof WhitespaceScannableToken
@@ -64,6 +68,25 @@ class Parser
         }
 
         return in_array(get_class($currentToken), $previousToken::supportedNextTokens(), true);
+    }
+
+    private function checkGrammerLevel(AbstractToken $currentToken): bool
+    {
+        if (false === $currentToken::requiresLevel()) {
+            return true;
+        }
+
+        $currentLevel = end($this->levels);
+        if ($currentLevel === false) {
+            return false;
+        }
+
+        $currentLevelClass = get_class($currentLevel);
+        if (!in_array($currentLevelClass, $currentToken::supportedLevelTokens(), true)) {
+            return false;
+        }
+
+        return true;
     }
 
     private function handleLevelToken(LevelSeparatorToken $currentToken, AbstractToken $previousToken): void

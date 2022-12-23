@@ -36,7 +36,7 @@ class ParserTest extends TestCase
      */
     public function testItValidatesGrammerForSequences(GrammerSupport $currentToken, GrammerSupport $previousToken, bool $outcome): void
     {
-        $this->assertSame($outcome, $this->parser->checkGrammer($currentToken, $previousToken));
+        $this->assertSame($outcome, $this->parser->checkGrammerSequence($currentToken, $previousToken));
     }
 
     public function testItThrowsAnExceptionOnParsingInvalidGrammerSequences(): void
@@ -104,6 +104,42 @@ class ParserTest extends TestCase
         $this->expectException(MissingLevelClosing::class);
 
         $stream = $this->createStream('["bar"');
+
+        $this->parser->parse($stream);
+    }
+
+    public function testItThrowsAnExceptionWhenTheOperatorTokenIsUsedThatRequiresALevel(): void
+    {
+        $this->expectException(MissingLevelOpener::class);
+
+        $stream = $this->createStream('"foo":"bar"');
+
+        $this->parser->parse($stream);
+    }
+
+    public function testItThrowsAnExceptionWhenTheValueSeparatorTokenIsUsedThatRequiresALevel(): void
+    {
+        $this->expectException(MissingLevelOpener::class);
+
+        $stream = $this->createStream('"foo","bar"');
+
+        $this->parser->parse($stream);
+    }
+
+    public function testItThrowsAnExceptionWhenTheOperatorTokenIsUsedInAnObjectLevel(): void
+    {
+        $this->expectException(MissingLevelOpener::class);
+
+        $stream = $this->createStream('["foo":"bar"]');
+
+        $this->parser->parse($stream);
+    }
+
+    public function testItThrowsAnExceptionWhenTheValueSeparatorTokenIsUsedOutsideOfAnLevel(): void
+    {
+        $this->expectException(MissingLevelOpener::class);
+
+        $stream = $this->createStream('"foo","bar"');
 
         $this->parser->parse($stream);
     }
