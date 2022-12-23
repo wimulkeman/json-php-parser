@@ -5,6 +5,7 @@ namespace Wimulkeman\JsonParser;
 use LogicException;
 use Wimulkeman\JsonParser\Exception\JsonParserException;
 use Wimulkeman\JsonParser\Exception\Parser\InvalidGrammerSequence;
+use Wimulkeman\JsonParser\Exception\Parser\MissingLevelClosing;
 use Wimulkeman\JsonParser\Exception\Parser\MissingLevelOpener;
 use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
 use Wimulkeman\JsonParser\Token\AbstractToken;
@@ -44,6 +45,10 @@ class Parser
             if ($currentToken instanceof LevelSeparatorToken) {
                 $this->handleLevelToken($currentToken, $previousToken);
             }
+        }
+
+        if (isset($currentToken) && count($this->levels) > 0) {
+            throw new MissingLevelClosing($currentToken, $previousToken, array_pop($this->levels));
         }
     }
 

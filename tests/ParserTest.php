@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Wimulkeman\JsonParser\Exception\Parser\InvalidGrammerSequence;
+use Wimulkeman\JsonParser\Exception\Parser\MissingLevelClosing;
 use Wimulkeman\JsonParser\Exception\Parser\MissingLevelOpener;
 use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
 use Wimulkeman\JsonParser\Parser;
@@ -77,7 +78,7 @@ class ParserTest extends TestCase
     {
         $this->expectException(MissingLevelOpener::class);
 
-        $stream = $this->createStream('"[bar"}');
+        $stream = $this->createStream('["bar"}');
 
         $this->parser->parse($stream);
     }
@@ -95,6 +96,15 @@ class ParserTest extends TestCase
         $stream = $this->createStream('[{"test":"foo"}]');
 
         $this->expectNotToPerformAssertions();
+        $this->parser->parse($stream);
+    }
+
+    public function testItThrowsAnExceptionWhenTheLevelIsNotClosed(): void
+    {
+        $this->expectException(MissingLevelClosing::class);
+
+        $stream = $this->createStream('["bar"');
+
         $this->parser->parse($stream);
     }
 
