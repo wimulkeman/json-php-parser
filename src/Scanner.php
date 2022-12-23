@@ -13,10 +13,15 @@ class Scanner
     public const STRIP_WHITESPACES = 'strip_whitespaces';
 
     private Lexer $lexer;
+
+    /** @var array<string, bool|string|int> */
     private $options = [
         self::STRIP_WHITESPACES => true,
     ];
 
+    /**
+     * @param array<string, bool|string|int> $options
+     */
     public function __construct(array $options = [])
     {
         $this->options = array_merge(
@@ -27,7 +32,10 @@ class Scanner
         $this->lexer = new Lexer();
     }
 
-    public function setOption($key, $value): void
+    /**
+     * @param bool|string|int $value
+     */
+    public function setOption(string $key, $value): void
     {
         if (!isset($this->options[$key])) {
             throw new LogicException('Unsupported option key');
