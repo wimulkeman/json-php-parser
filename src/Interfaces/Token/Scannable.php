@@ -6,5 +6,8 @@ use Wimulkeman\JsonParser\Token\ScannableToken;
 
 interface Scannable
 {
+    /**
+     * @param resource $stream
+     */
     public function scan($stream): ?ScannableToken;
 }
