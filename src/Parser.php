@@ -2,15 +2,21 @@
 
 namespace Wimulkeman\JsonParser;
 
+use LogicException;
 use Wimulkeman\JsonParser\Exception\JsonParserException;
 use Wimulkeman\JsonParser\Exception\Parser\InvalidGrammerSequence;
+use Wimulkeman\JsonParser\Exception\Parser\MissingLevelOpener;
 use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
+use Wimulkeman\JsonParser\Token\AbstractToken;
+use Wimulkeman\JsonParser\Token\Separator\LevelSeparatorToken;
 use Wimulkeman\JsonParser\Token\Whitespace\StartOfStreamWhitespaceToken;
 use Wimulkeman\JsonParser\Token\WhitespaceScannableToken;
 
 class Parser
 {
     private Scanner $scanner;
+    /** @var array<int, LevelSeparatorToken> */
+    private array $levels = [];
 
     public function __construct(Scanner $scanner)
     {
@@ -34,6 +40,10 @@ class Parser
             if (!$currentToken instanceof WhitespaceScannableToken) {
                 $previousToken = $currentToken;
             }
+
+            if ($currentToken instanceof LevelSeparatorToken) {
+                $this->handleLevelToken($currentToken, $previousToken);
+            }
         }
     }
 
@@ -49,5 +59,32 @@ class Parser
         }
 
         return in_array(get_class($currentToken), $previousToken::supportedNextTokens(), true);
+    }
+
+    private function handleLevelToken(LevelSeparatorToken $currentToken, AbstractToken $previousToken): void
+    {
+        if ($currentToken->isOpening()) {
+            $this->levels[] = $currentToken;
+
+            return;
+        }
+
+        if (false === $currentToken->isClosing()) {
+            throw new LogicException(
+                sprintf(
+                    'The token "%s" should be either a opering or closing token for the level',
+                    get_class($currentToken)
+                )
+            );
+        }
+
+        $activeLevel = array_pop($this->levels);
+        if (null === $activeLevel) {
+            throw new MissingLevelOpener($currentToken, $previousToken);
+        }
+
+        if ($currentToken::counterPart() !== get_class($activeLevel)) {
+            throw new MissingLevelOpener($currentToken, $previousToken);
+        }
     }
 }
