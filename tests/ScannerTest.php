@@ -102,7 +102,7 @@ class ScannerTest extends TestCase
         $this->assertCount(0, $expectedTokens);
     }
 
-    public function testScanSeparatorTokens()
+    public function testScanSeparatorTokens(): void
     {
         $text = ',[]{}';
 
