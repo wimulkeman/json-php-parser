@@ -2,12 +2,12 @@
 
 namespace Tests;
 
+use PHPUnit\Framework\TestCase;
 use Wimulkeman\JsonParser\Exception\Parser\InvalidGrammerSequence;
 use Wimulkeman\JsonParser\Exception\Parser\MissingLevelClosing;
 use Wimulkeman\JsonParser\Exception\Parser\MissingLevelOpener;
 use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
 use Wimulkeman\JsonParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Wimulkeman\JsonParser\Scanner;
 use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;

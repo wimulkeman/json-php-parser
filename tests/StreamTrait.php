@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use RuntimeException;
+
 trait StreamTrait
 {
     /**
