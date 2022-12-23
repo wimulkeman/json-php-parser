@@ -30,6 +30,8 @@ class CloseObjectSeparatorToken extends LevelSeparatorToken
         return [
             EndOfStreamWhitespaceToken::class,
             ValueSeparatorToken::class,
+            CloseListSeparatorToken::class,
+            __CLASS__,
         ];
     }
 
