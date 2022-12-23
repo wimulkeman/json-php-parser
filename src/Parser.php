@@ -6,6 +6,7 @@ use Wimulkeman\JsonParser\Exception\JsonParserException;
 use Wimulkeman\JsonParser\Exception\Parser\InvalidGrammerSequence;
 use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
 use Wimulkeman\JsonParser\Token\Whitespace\StartOfStreamWhitespaceToken;
+use Wimulkeman\JsonParser\Token\WhitespaceScannableToken;
 
 class Parser
 {
@@ -26,11 +27,13 @@ class Parser
 
         $previousToken = new StartOfStreamWhitespaceToken();
         foreach ($tokens as $currentToken) {
-            if ($this->checkGrammer($currentToken, $previousToken)) {
+            if (false === $this->checkGrammer($currentToken, $previousToken)) {
                 throw new InvalidGrammerSequence($currentToken, $previousToken);
             }
 
-            $previousToken = $currentToken;
+            if (!$currentToken instanceof WhitespaceScannableToken) {
+                $previousToken = $currentToken;
+            }
         }
     }
 
@@ -39,7 +42,9 @@ class Parser
      */
     public function checkGrammer(GrammerSupport $currentToken, GrammerSupport $previousToken): bool
     {
-        if ($currentToken::acceptsAllTokens()) {
+        if ($currentToken instanceof WhitespaceScannableToken
+            || $previousToken instanceof WhitespaceScannableToken
+        ) {
             return true;
         }
 

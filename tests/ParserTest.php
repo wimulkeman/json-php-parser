@@ -44,6 +44,23 @@ class ParserTest extends TestCase
         $this->parser->parse($stream);
     }
 
+    public function testItIgnoresWhitespaceTokensWhileParsingForWhitespaceTokensAcceptEverything(): void
+    {
+        $parser = new Parser(
+            new Scanner(
+                [
+                    Scanner::STRIP_WHITESPACES => false,
+                ]
+            )
+        );
+
+        $this->expectException(InvalidGrammerSequence::class);
+
+        $stream = $this->createStream('{ false }');
+
+        $parser->parse($stream);
+    }
+
     public function provideTokenSequences(): array
     {
         return [
@@ -63,6 +80,11 @@ class ParserTest extends TestCase
                 true,
             ],
             '"All tokens" are permitted after "Whitespace: Space"' => [
+                new OperatorScannableToken(),
+                new SpaceWhitespaceToken(),
+                true,
+            ],
+            '"All tokens" are permitted before "Whitespace: Space"' => [
                 new SpaceWhitespaceToken(),
                 new OperatorScannableToken(),
                 true,
@@ -71,6 +93,16 @@ class ParserTest extends TestCase
                 new FalseLiteralToken(),
                 new OpenObjectSeparatorToken(),
                 false,
+            ],
+            '"Literal: False" is permitted after "Whitespace: Space"' => [
+                new FalseLiteralToken(),
+                new SpaceWhitespaceToken(),
+                true,
+            ],
+            '"List: Object Open" is permitted after "Stream: Start"' => [
+                new OpenObjectSeparatorToken(),
+                new StartOfStreamWhitespaceToken(),
+                true,
             ],
         ];
     }
