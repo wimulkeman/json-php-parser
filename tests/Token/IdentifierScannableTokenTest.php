@@ -31,6 +31,10 @@ class IdentifierScannableTokenTest extends AbstractScanTokenTest
             return;
         }
 
+        if (null === $result) {
+            $this->fail('The result of the scan should have been a token');
+        }
+
         $this->assertNotNull($result);
         $this->assertEquals($expected, $result->getLexeme());
     }
