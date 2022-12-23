@@ -10,9 +10,12 @@ use Wimulkeman\JsonParser\Lexer\OperatorLexer;
 use Wimulkeman\JsonParser\Lexer\SeparatorLexer;
 use Wimulkeman\JsonParser\Lexer\WhitespaceLexer;
 use Wimulkeman\JsonParser\Token\ScannableToken;
+use Wimulkeman\JsonParser\Traits\StreamResourceTrait;
 
 class Lexer implements Scannable
 {
+    use StreamResourceTrait;
+
     /** @var array<int, AbstractLexer> */
     private array $lexers;
 
@@ -29,10 +32,7 @@ class Lexer implements Scannable
 
     final public function scan($stream): ?ScannableToken
     {
-        $startPosition = ftell($stream);
-        if (false === $startPosition) {
-            throw new \RuntimeException('The current position could not be determined from the provided resource stream');
-        }
+        $startPosition = $this->getCurrentStreamPosition($stream);
 
         foreach ($this->lexers as $lexer) {
             $token = $lexer->scan($stream);

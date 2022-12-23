@@ -4,9 +4,12 @@ namespace Wimulkeman\JsonParser\Lexer;
 
 use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
 use Wimulkeman\JsonParser\Token\ScannableToken;
+use Wimulkeman\JsonParser\Traits\StreamResourceTrait;
 
 abstract class AbstractLexer implements Scannable
 {
+    use StreamResourceTrait;
+
     /**
      * @return array<ScannableToken>
      */
@@ -14,10 +17,7 @@ abstract class AbstractLexer implements Scannable
 
     final public function scan($stream): ?ScannableToken
     {
-        $startPosition = ftell($stream);
-        if (false === $startPosition) {
-            throw new \RuntimeException('The current position could not be determined from the provided resource stream');
-        }
+        $startPosition = $this->getCurrentStreamPosition($stream);
 
         foreach ($this->getLexers() as $lexer) {
             $token = $lexer->scan($stream);

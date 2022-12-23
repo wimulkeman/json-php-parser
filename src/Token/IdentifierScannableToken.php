@@ -7,9 +7,12 @@ use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\CloseListSeparatorToken
 use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\CloseObjectSeparatorToken;
 use Wimulkeman\JsonParser\Token\Separator\ValueSeparatorToken;
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
+use Wimulkeman\JsonParser\Traits\StreamResourceTrait;
 
 class IdentifierScannableToken extends ScannableToken
 {
+    use StreamResourceTrait;
+
     protected string $lexeme = '';
 
     private string $wrappingCharacter = '"';
@@ -17,7 +20,7 @@ class IdentifierScannableToken extends ScannableToken
 
     public function scan($stream): ?ScannableToken
     {
-        $this->setPointerStart(ftell($stream));
+        $this->setPointerStart($this->getCurrentStreamPosition($stream));
 
         $lexemeLength = strlen($this->wrappingCharacter);
         $streamStart = $this->scanStream($stream, $lexemeLength);
