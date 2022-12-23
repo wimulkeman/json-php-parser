@@ -15,6 +15,9 @@ abstract class AbstractLexer implements Scannable
     final public function scan($stream): ?ScannableToken
     {
         $startPosition = ftell($stream);
+        if (false === $startPosition) {
+            throw new \RuntimeException('The current position could not be determined from the provided resource stream');
+        }
 
         foreach ($this->getLexers() as $lexer) {
             $token = $lexer->scan($stream);
