@@ -2,6 +2,6 @@
 
 namespace Wimulkeman\JsonParser\Token;
 
-class WhitespaceScannableToken extends ScannableToken
+abstract class WhitespaceScannableToken extends ScannableToken
 {
 }

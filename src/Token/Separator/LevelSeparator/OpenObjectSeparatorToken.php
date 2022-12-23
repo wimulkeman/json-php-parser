@@ -2,6 +2,7 @@
 
 namespace Wimulkeman\JsonParser\Token\Separator\LevelSeparator;
 
+use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Separator\LevelSeparatorToken;
 
 class OpenObjectSeparatorToken extends LevelSeparatorToken
@@ -18,8 +19,21 @@ class OpenObjectSeparatorToken extends LevelSeparatorToken
         return false;
     }
 
-    public function counterPart(): string
+    public static function counterPart(): string
     {
         return CloseObjectSeparatorToken::class;
+    }
+
+    public static function supportedNextTokens(): array
+    {
+        return [
+            IdentifierScannableToken::class,
+            static::counterPart(),
+        ];
+    }
+
+    public static function supportedLevelTokens(): array
+    {
+        return [];
     }
 }

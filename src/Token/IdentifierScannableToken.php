@@ -3,6 +3,8 @@
 namespace Wimulkeman\JsonParser\Token;
 
 use Wimulkeman\JsonParser\Exception\ContentNotAString;
+use Wimulkeman\JsonParser\Token\Separator\ValueSeparatorToken;
+use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
 
 class IdentifierScannableToken extends ScannableToken
 {
@@ -45,5 +47,19 @@ class IdentifierScannableToken extends ScannableToken
         }
 
         return null;
+    }
+
+    public static function supportedNextTokens(): array
+    {
+        return [
+            OperatorScannableToken::class,
+            ValueSeparatorToken::class,
+            EndOfStreamWhitespaceToken::class,
+        ];
+    }
+
+    public static function supportedLevelTokens(): array
+    {
+        return [];
     }
 }

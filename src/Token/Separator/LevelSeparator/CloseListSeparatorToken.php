@@ -3,6 +3,8 @@
 namespace Wimulkeman\JsonParser\Token\Separator\LevelSeparator;
 
 use Wimulkeman\JsonParser\Token\Separator\LevelSeparatorToken;
+use Wimulkeman\JsonParser\Token\Separator\ValueSeparatorToken;
+use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
 
 class CloseListSeparatorToken extends LevelSeparatorToken
 {
@@ -18,8 +20,21 @@ class CloseListSeparatorToken extends LevelSeparatorToken
         return true;
     }
 
-    public function counterPart(): string
+    public static function counterPart(): string
     {
         return OpenListSeparatorToken::class;
+    }
+
+    public static function supportedNextTokens(): array
+    {
+        return [
+            EndOfStreamWhitespaceToken::class,
+            ValueSeparatorToken::class,
+        ];
+    }
+
+    public static function supportedLevelTokens(): array
+    {
+        return [static::counterPart()];
     }
 }

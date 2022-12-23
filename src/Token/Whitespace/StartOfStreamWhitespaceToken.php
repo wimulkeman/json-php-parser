@@ -12,7 +12,7 @@ use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\OpenObjectSeparatorToke
 
 class StartOfStreamWhitespaceToken extends AbstractToken
 {
-    public function supportedNextTokens(): array
+    public static function supportedNextTokens(): array
     {
         return [
             TrueLiteralToken::class,
@@ -25,12 +25,12 @@ class StartOfStreamWhitespaceToken extends AbstractToken
         ];
     }
 
-    public function supportedLevelTokens(): array
+    public static function supportedLevelTokens(): array
     {
         return [];
     }
 
-    public function acceptsAllTokens(): bool
+    public static function acceptsAllTokens(): bool
     {
         return false;
     }

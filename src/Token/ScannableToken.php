@@ -6,7 +6,7 @@ use Wimulkeman\JsonParser\Exception\ContentNotAString;
 use Wimulkeman\JsonParser\Exception\InvalidStreamProvided;
 use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
 
-class ScannableToken extends AbstractToken implements Scannable
+abstract class ScannableToken extends AbstractToken implements Scannable
 {
     /**
      * @param resource $stream
@@ -27,6 +27,11 @@ class ScannableToken extends AbstractToken implements Scannable
         $this->setPointerEnd(ftell($stream));
 
         return $this;
+    }
+
+    public static function acceptsAllTokens(): bool
+    {
+        return false;
     }
 
     protected function scanStream($stream, $length): string
