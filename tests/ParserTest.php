@@ -35,6 +35,15 @@ class ParserTest extends TestCase
         $this->assertSame($outcome, $this->parser->checkGrammer($currentToken, $previousToken));
     }
 
+    public function testItThrowsAnExceptionOnParsingInvalidGrammerSequences(): void
+    {
+        $this->expectException(InvalidGrammerSequence::class);
+
+        $stream = $this->createStream('{false}');
+
+        $this->parser->parse($stream);
+    }
+
     public function provideTokenSequences(): array
     {
         return [

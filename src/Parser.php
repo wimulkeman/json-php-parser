@@ -3,6 +3,7 @@
 namespace Wimulkeman\JsonParser;
 
 use Wimulkeman\JsonParser\Exception\JsonParserException;
+use Wimulkeman\JsonParser\Exception\Parser\InvalidGrammerSequence;
 use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
 use Wimulkeman\JsonParser\Token\Whitespace\StartOfStreamWhitespaceToken;
 
@@ -25,7 +26,9 @@ class Parser
 
         $previousToken = new StartOfStreamWhitespaceToken();
         foreach ($tokens as $currentToken) {
-            $this->checkGrammer($currentToken, $previousToken);
+            if ($this->checkGrammer($currentToken, $previousToken)) {
+                throw new InvalidGrammerSequence($currentToken, $previousToken);
+            }
 
             $previousToken = $currentToken;
         }
