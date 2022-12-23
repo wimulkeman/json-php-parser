@@ -10,7 +10,10 @@ use Wimulkeman\JsonParser\Token\AbstractToken;
 use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
+use Wimulkeman\JsonParser\Token\OperatorScannableToken;
+use Wimulkeman\JsonParser\Token\Separator\ValueSeparatorToken;
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
+use Wimulkeman\JsonParser\Token\Whitespace\SpaceWhitespaceToken;
 use Wimulkeman\JsonParser\Token\Whitespace\StartOfStreamWhitespaceToken;
 
 class ParserTest extends TestCase
@@ -48,6 +51,11 @@ class ParserTest extends TestCase
             [
                 new EndOfStreamWhitespaceToken(),
                 new StartOfStreamWhitespaceToken(),
+                true,
+            ],
+            'Spaces accept all previous tokens' => [
+                new SpaceWhitespaceToken(),
+                new OperatorScannableToken(),
                 true,
             ],
         ];

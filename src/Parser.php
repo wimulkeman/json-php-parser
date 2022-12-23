@@ -36,6 +36,10 @@ class Parser
      */
     public function checkGrammer(GrammerSupport $currentToken, GrammerSupport $previousToken): bool
     {
+        if ($currentToken::acceptsAllTokens()) {
+            return true;
+        }
+
         return in_array(get_class($currentToken), $previousToken::supportedNextTokens(), true);
     }
 }
