@@ -9,6 +9,7 @@ use Wimulkeman\JsonParser\Exception\Parser\MissingLevelOpener;
 use Wimulkeman\JsonParser\Interfaces\Token\GrammerSupport;
 use Wimulkeman\JsonParser\Parser;
 use Wimulkeman\JsonParser\Scanner;
+use Wimulkeman\JsonParser\Token\AbstractToken;
 use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
@@ -144,6 +145,9 @@ class ParserTest extends TestCase
         $this->parser->parse($stream);
     }
 
+    /**
+     * @return array<string, array<int, AbstractToken|bool>>
+     */
     public function provideTokenSequences(): array
     {
         return [

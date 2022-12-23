@@ -35,6 +35,9 @@ class IdentifierScannableTokenTest extends AbstractScanTokenTest
         $this->assertEquals($expected, $result->getLexeme());
     }
 
+    /**
+     * @return array<string, array<int, string|null>>
+     */
     public function scannerInput(): array
     {
         return [
