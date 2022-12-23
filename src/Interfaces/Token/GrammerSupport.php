@@ -7,14 +7,14 @@ interface GrammerSupport
     /**
      * @return array<int, string>
      */
-    public function supportedNextTokens(): array;
+    public static function supportedNextTokens(): array;
 
     /**
      * @return array<int, string>
      */
-    public function supportedLevelTokens(): array;
+    public static function supportedLevelTokens(): array;
 
-    public function requiresLevel(): bool;
+    public static function requiresLevel(): bool;
 
-    public function acceptsAllTokens(): bool;
+    public static function acceptsAllTokens(): bool;
 }

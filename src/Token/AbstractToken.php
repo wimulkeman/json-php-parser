@@ -36,14 +36,14 @@ abstract class AbstractToken implements StreamPositionInterface, GrammerSupport
         return $this->pointerEnd;
     }
 
-    final public function requiresLevel(): bool
+    final public static function requiresLevel(): bool
     {
-        return count($this->supportedLevelTokens()) > 0;
+        return count(static::supportedLevelTokens()) > 0;
     }
 
-    abstract public function acceptsAllTokens(): bool;
+    abstract public static function acceptsAllTokens(): bool;
 
-    abstract public function supportedNextTokens(): array;
+    abstract public static function supportedNextTokens(): array;
 
-    abstract public function supportedLevelTokens(): array;
+    abstract public static function supportedLevelTokens(): array;
 }
