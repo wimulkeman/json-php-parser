@@ -24,7 +24,7 @@ class InvalidGrammerSequence extends JsonParserException
         $currentLexeme = $currentToken->getLexeme();
 
         $error = sprintf("Invalid character found at position %s.\n", $currentToken->getPointerStart());
-        $error .= sprintf("The allowed characters are [%s]\n", implode(', ', $previousToken->supportedNextTokens()));
+        $error .= sprintf("The allowed characters are [%s]\n", implode(', ', $previousToken::supportedNextTokens()));
         $error .= sprintf("The error occurred on the following sequence:\n%s%s\n", $previousLexeme, $currentLexeme);
         $error .= sprintf('%s/\\', str_repeat(' ', strlen($previousLexeme) - 1));
 
