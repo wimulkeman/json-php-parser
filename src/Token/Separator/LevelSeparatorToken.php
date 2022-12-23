@@ -10,5 +10,5 @@ abstract class LevelSeparatorToken extends SeparatorScannableToken
 
     abstract public function isClosing(): bool;
 
-    abstract public function counterPart(): string;
+    abstract public static function counterPart(): string;
 }
