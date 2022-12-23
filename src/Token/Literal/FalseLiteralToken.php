@@ -7,5 +7,4 @@ use Wimulkeman\JsonParser\Token\LiteralScannableToken;
 class FalseLiteralToken extends LiteralScannableToken
 {
     protected string $lexeme = 'false';
-    protected $value = false;
 }
