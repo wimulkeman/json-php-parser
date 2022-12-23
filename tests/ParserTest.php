@@ -90,6 +90,14 @@ class ParserTest extends TestCase
         $this->parser->parse($stream);
     }
 
+    public function testItParsesMultipleLevels(): void
+    {
+        $stream = $this->createStream('[{"test":"foo"}]');
+
+        $this->expectNotToPerformAssertions();
+        $this->parser->parse($stream);
+    }
+
     public function provideTokenSequences(): array
     {
         return [
