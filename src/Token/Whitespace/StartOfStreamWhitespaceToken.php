@@ -12,6 +12,8 @@ use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\OpenObjectSeparatorToke
 
 class StartOfStreamWhitespaceToken extends AbstractToken
 {
+    protected string $lexeme = '';
+
     public static function supportedNextTokens(): array
     {
         return [
