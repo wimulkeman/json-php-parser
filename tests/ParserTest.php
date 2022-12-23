@@ -11,6 +11,8 @@ use Wimulkeman\JsonParser\Token\IdentifierScannableToken;
 use Wimulkeman\JsonParser\Token\Literal\FalseLiteralToken;
 use Wimulkeman\JsonParser\Token\Literal\TrueLiteralToken;
 use Wimulkeman\JsonParser\Token\OperatorScannableToken;
+use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\CloseListSeparatorToken;
+use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\CloseObjectSeparatorToken;
 use Wimulkeman\JsonParser\Token\Separator\LevelSeparator\OpenObjectSeparatorToken;
 use Wimulkeman\JsonParser\Token\Whitespace\EndOfStreamWhitespaceToken;
 use Wimulkeman\JsonParser\Token\Whitespace\SpaceWhitespaceToken;
@@ -102,6 +104,16 @@ class ParserTest extends TestCase
             '"List: Object Open" is permitted after "Stream: Start"' => [
                 new OpenObjectSeparatorToken(),
                 new StartOfStreamWhitespaceToken(),
+                true,
+            ],
+            '"List: Object Close" is permitted after "Identifier"' => [
+                new CloseObjectSeparatorToken(),
+                new IdentifierScannableToken(),
+                true,
+            ],
+            '"List: List Close" is permitted after "Identifier"' => [
+                new CloseListSeparatorToken(),
+                new IdentifierScannableToken(),
                 true,
             ],
         ];
