@@ -7,7 +7,7 @@ use Throwable;
 
 class InvalidStreamProvided extends RuntimeException
 {
-    public function __construct($code = 0, Throwable $previous = null)
+    public function __construct(int $code = 0, Throwable $previous = null)
     {
         parent::__construct('The provided resource should be of the type stream', $code, $previous);
     }
