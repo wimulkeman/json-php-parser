@@ -2,6 +2,7 @@
 
 namespace Wimulkeman\JsonParser\Token;
 
+use LogicException;
 use Wimulkeman\JsonParser\Exception\ContentNotAString;
 use Wimulkeman\JsonParser\Exception\InvalidStreamProvided;
 use Wimulkeman\JsonParser\Interfaces\Token\Scannable;
@@ -44,6 +45,10 @@ abstract class ScannableToken extends AbstractToken implements Scannable
     {
         if (!is_resource($stream) || 'stream' !== get_resource_type($stream)) {
             throw new InvalidStreamProvided();
+        }
+
+        if ($length < 0) {
+            throw new LogicException('The length to scan can only be positive');
         }
 
         $content = fread($stream, $length);
